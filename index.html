@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -9,228 +8,647 @@
 <title>Smart Top Up | Gaming Universe</title>
 
 <style>
-:root {
-  --bg: #080b16;
-  --card: #11182a;
-  --cyan: #00e5ff;
-  --purple: #8b5cf6;
-  --text: #f5f7ff;
-  --muted: #a3aec5;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, sans-serif;
-  line-height: 1.65;
-}
-a { color: inherit; text-decoration: none; }
-button, input, select { font: inherit; }
-button { cursor: pointer; }
-.container { width: min(1100px, 92%); margin: auto; }
-
-nav {
-  position: sticky; top: 0; z-index: 10;
-  background: rgba(8,11,22,.94);
-  border-bottom: 1px solid #202a42;
-  backdrop-filter: blur(12px);
-}
-.nav-inner {
-  min-height: 72px; display: flex; align-items: center;
-  justify-content: space-between; gap: 15px;
-}
-.brand { font-size: 21px; font-weight: 900; color: var(--cyan); }
-.brand span { color: white; }
-.nav-links { display: flex; gap: 22px; align-items: center; }
-.nav-links a { color: var(--muted); font-size: 14px; }
-.nav-links a:hover { color: var(--cyan); }
-.menu-btn {
-  display: none; border: 1px solid #33415d; color: white;
-  background: var(--card); padding: 7px 11px; border-radius: 8px;
+:root{
+  --bg:#080b16;
+  --card:#11182a;
+  --cyan:#00e5ff;
+  --purple:#8b5cf6;
+  --text:#f5f7ff;
+  --muted:#a3aec5;
 }
 
-.hero {
-  position: relative; overflow: hidden; text-align: center;
-  padding: 90px 15px 75px;
-  background: radial-gradient(ellipse at 50% 0%, #153b62 0%, #11132c 35%, var(--bg) 75%);
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
-.hero::before, .hero::after {
-  content: ""; position: absolute; width: 220px; height: 220px;
-  border: 1px solid #00e5ff22; border-radius: 50%;
-  animation: float 7s ease-in-out infinite; pointer-events: none;
-}
-.hero::before { left: -100px; top: 70px; }
-.hero::after { right: -90px; bottom: 0; animation-delay: -3s; }
-@keyframes float {
-  0%,100% { transform: translateY(0) rotate(0); }
-  50% { transform: translateY(-18px) rotate(15deg); }
-}
-.eyebrow {
-  display: inline-block; padding: 7px 14px; border-radius: 30px;
-  border: 1px solid #00e5ff66; background: #00e5ff10;
-  color: var(--cyan); font-size: 12px; letter-spacing: 1px;
-}
-.hero h1 {
-  font-size: clamp(38px, 7vw, 70px);
-  line-height: 1.12; margin: 22px 0;
-}
-.gradient-text {
-  background: linear-gradient(90deg, var(--cyan), #a78bfa, #ff79c6);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-.hero p { color: var(--muted); max-width: 620px; margin: auto; }
-.btn {
-  display: inline-block; border: 0; border-radius: 10px;
-  padding: 12px 19px; font-weight: 800;
-  background: linear-gradient(100deg, var(--cyan), #7dd3fc);
-  color: #07111b; transition: transform .2s, filter .2s;
-}
-.btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
-.btn-outline {
-  display: inline-block; border: 1px solid #34435e;
-  border-radius: 10px; padding: 11px 19px; color: white;
-}
-.hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 27px; }
 
-.stats {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 12px; max-width: 650px; margin: 38px auto 0;
+html{
+  scroll-behavior:smooth;
 }
-.stat {
-  padding: 15px 8px; border: 1px solid #28344d;
-  background: #0b1222aa; border-radius: 12px;
-}
-.stat strong { display: block; color: var(--cyan); font-size: 19px; }
-.stat span { color: var(--muted); font-size: 12px; }
 
-section { scroll-margin-top: 85px; }
-.section { padding: 65px 0; }
-.section-heading { text-align: center; margin-bottom: 30px; }
-.section-heading h2 { font-size: clamp(25px, 4vw, 35px); }
-.section-heading p { color: var(--muted); margin-top: 5px; }
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  line-height:1.65;
+}
 
-.search-wrap { max-width: 440px; margin: 0 auto 25px; }
-.search-wrap input {
-  width: 100%; padding: 13px 15px; border-radius: 10px;
-  border: 1px solid #303d57; background: #11182a; color: white;
-  outline: none;
+a{
+  color:inherit;
+  text-decoration:none;
 }
-.search-wrap input:focus, .field input:focus, .field select:focus {
-  border-color: var(--cyan);
-}
-.games {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 17px;
-}
-.game-card {
-  position: relative; overflow: hidden;
-  background: linear-gradient(145deg, #151f35, #0e1423);
-  border: 1px solid #283650; border-radius: 17px;
-  padding: 23px 14px; text-align: center;
-  transition: transform .25s, border-color .25s;
-}
-.game-card:hover { transform: translateY(-5px); border-color: var(--cyan); }
-.game-icon {
-  width: 72px; height: 72px; display: grid; place-items: center;
-  margin: 0 auto 14px; border-radius: 20px;
-  background: linear-gradient(135deg, #00e5ff20, #8b5cf620);
-  font-size: 38px;
-}
-.game-card h3 { font-size: 17px; }
-.game-card p { color: var(--muted); font-size: 13px; margin: 4px 0 15px; }
-.tag {
-  display: inline-block; color: var(--cyan); background: #00e5ff12;
-  border-radius: 5px; padding: 2px 7px; font-size: 10px; margin-bottom: 10px;
-}
-.game-card .btn { padding: 9px 14px; font-size: 13px; }
 
-.panel {
-  max-width: 700px; margin: auto; padding: 25px;
-  background: linear-gradient(145deg, #151d31, #0e1423);
-  border: 1px solid #2b3954; border-radius: 18px;
+button,input,select{
+  font:inherit;
 }
-.demo-note {
-  padding: 12px 14px; background: #fbbf2410;
-  border: 1px solid #fbbf2444; color: #fcd98b;
-  border-radius: 9px; font-size: 13px; margin-bottom: 20px;
-}
-.field { margin-bottom: 17px; }
-.field label { display: block; font-size: 14px; margin-bottom: 7px; }
-.field input, .field select {
-  width: 100%; padding: 12px; border-radius: 9px;
-  background: #080d19; color: white; border: 1px solid #303d57; outline: none;
-}
-.packages {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
-}
-.package {
-  padding: 14px 5px; text-align: center; border-radius: 10px;
-  border: 1px solid #303d57; background: #0b1220; color: white;
-}
-.package.active { border-color: var(--cyan); background: #00e5ff12; }
-.package strong, .package span { display: block; }
-.package span { font-size: 12px; color: var(--muted); }
-.full-btn { width: 100%; margin-top: 15px; }
 
-.features {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px;
+button{
+  cursor:pointer;
 }
-.feature {
-  background: var(--card); border: 1px solid #25314a;
-  padding: 22px; border-radius: 14px;
-}
-.feature-icon { font-size: 30px; }
-.feature h3 { margin: 8px 0; }
-.feature p { color: var(--muted); font-size: 14px; }
 
-.faq { max-width: 750px; margin: auto; }
-details {
-  padding: 17px; background: var(--card);
-  border: 1px solid #26334c; border-radius: 10px; margin-bottom: 10px;
+.container{
+  width:min(1100px,92%);
+  margin:auto;
 }
-summary { cursor: pointer; font-weight: bold; }
-details p { color: var(--muted); padding-top: 10px; font-size: 14px; }
 
-footer {
-  padding: 35px 0; background: #05070d;
-  border-top: 1px solid #202a42; text-align: center;
+/* NAVBAR */
+nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(8,11,22,.95);
+  border-bottom:1px solid #202a42;
+  backdrop-filter:blur(12px);
 }
-footer .brand { margin-bottom: 8px; }
-footer p { color: var(--muted); font-size: 13px; }
-footer .footer-links { margin: 12px 0; display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
 
-.toast {
-  position: fixed; left: 50%; bottom: 22px; z-index: 30;
-  transform: translate(-50%, 150px); opacity: 0;
-  width: min(90%, 390px); background: #18243a;
-  border: 1px solid var(--cyan); border-radius: 12px;
-  padding: 15px; box-shadow: 0 10px 35px #0008;
-  transition: .3s; text-align: center;
+.nav-inner{
+  min-height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
 }
-.toast.show { transform: translate(-50%, 0); opacity: 1; }
 
-@media (max-width: 800px) {
-  .games { grid-template-columns: repeat(2, 1fr); }
-  .features { grid-template-columns: 1fr; }
+.brand{
+  display:flex;
+  align-items:center;
 }
-@media (max-width: 560px) {
-  .nav-inner { min-height: 65px; }
-  .menu-btn { display: block; }
-  .nav-links {
-    display: none; position: absolute; top: 65px; left: 0; right: 0;
-    padding: 20px; background: #0c1120; flex-direction: column; gap: 17px;
-    border-bottom: 1px solid #26334c;
+
+.brand img{
+  width:170px;
+  max-width:42vw;
+  height:auto;
+  display:block;
+  filter:drop-shadow(0 0 8px #00e5ff55);
+}
+
+.nav-links{
+  display:flex;
+  gap:22px;
+  align-items:center;
+}
+
+.nav-links a{
+  color:var(--muted);
+  font-size:14px;
+  transition:.2s;
+}
+
+.nav-links a:hover{
+  color:var(--cyan);
+}
+
+.menu-btn{
+  display:none;
+  border:1px solid #33415d;
+  color:white;
+  background:var(--card);
+  padding:7px 11px;
+  border-radius:8px;
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  padding:90px 15px 75px;
+  background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      #153b62 0%,
+      #11132c 35%,
+      var(--bg) 75%
+    );
+}
+
+.hero::before,
+.hero::after{
+  content:"";
+  position:absolute;
+  width:220px;
+  height:220px;
+  border:1px solid #00e5ff22;
+  border-radius:50%;
+  animation:float 7s ease-in-out infinite;
+  pointer-events:none;
+}
+
+.hero::before{
+  left:-100px;
+  top:70px;
+}
+
+.hero::after{
+  right:-90px;
+  bottom:0;
+  animation-delay:-3s;
+}
+
+@keyframes float{
+  0%,100%{
+    transform:translateY(0) rotate(0);
   }
-  .nav-links.open { display: flex; }
-  .hero { padding: 65px 12px 55px; }
-  .stats { gap: 6px; }
-  .stat strong { font-size: 16px; }
-  .stat span { font-size: 10px; }
-  .packages { grid-template-columns: repeat(2, 1fr); }
-  .panel { padding: 17px; }
+  50%{
+    transform:translateY(-18px) rotate(15deg);
+  }
 }
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+
+.hero-logo{
+  width:min(310px,75vw);
+  margin:0 auto 20px;
+  display:block;
+  filter:
+    drop-shadow(0 0 12px #00e5ff66)
+    drop-shadow(0 0 28px #8b5cf633);
+  animation:logoFloat 4s ease-in-out infinite;
+}
+
+@keyframes logoFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+}
+
+.eyebrow{
+  display:inline-block;
+  padding:7px 14px;
+  border-radius:30px;
+  border:1px solid #00e5ff66;
+  background:#00e5ff10;
+  color:var(--cyan);
+  font-size:12px;
+  letter-spacing:1px;
+}
+
+.hero h1{
+  font-size:clamp(38px,7vw,70px);
+  line-height:1.12;
+  margin:22px 0;
+}
+
+.gradient-text{
+  background:linear-gradient(
+    90deg,
+    var(--cyan),
+    #a78bfa,
+    #ff79c6
+  );
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  color:var(--muted);
+  max-width:620px;
+  margin:auto;
+}
+
+.hero-actions{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:27px;
+}
+
+.btn{
+  display:inline-block;
+  border:0;
+  border-radius:10px;
+  padding:12px 19px;
+  font-weight:800;
+  background:linear-gradient(
+    100deg,
+    var(--cyan),
+    #7dd3fc
+  );
+  color:#07111b;
+  transition:transform .2s,filter .2s;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.1);
+}
+
+.btn-outline{
+  display:inline-block;
+  border:1px solid #34435e;
+  border-radius:10px;
+  padding:11px 19px;
+  color:white;
+}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  max-width:650px;
+  margin:38px auto 0;
+}
+
+.stat{
+  padding:15px 8px;
+  border:1px solid #28344d;
+  background:#0b1222aa;
+  border-radius:12px;
+}
+
+.stat strong{
+  display:block;
+  color:var(--cyan);
+  font-size:19px;
+}
+
+.stat span{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* SECTIONS */
+section{
+  scroll-margin-top:85px;
+}
+
+.section{
+  padding:65px 0;
+}
+
+.section-heading{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.section-heading h2{
+  font-size:clamp(25px,4vw,35px);
+}
+
+.section-heading p{
+  color:var(--muted);
+  margin-top:5px;
+}
+
+/* SEARCH */
+.search-wrap{
+  max-width:440px;
+  margin:0 auto 25px;
+}
+
+.search-wrap input{
+  width:100%;
+  padding:13px 15px;
+  border-radius:10px;
+  border:1px solid #303d57;
+  background:#11182a;
+  color:white;
+  outline:none;
+}
+
+.search-wrap input:focus,
+.field input:focus,
+.field select:focus{
+  border-color:var(--cyan);
+}
+
+/* GAMES */
+.games{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:17px;
+}
+
+.game-card{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(
+    145deg,
+    #151f35,
+    #0e1423
+  );
+  border:1px solid #283650;
+  border-radius:17px;
+  padding:23px 14px;
+  text-align:center;
+  transition:transform .25s,border-color .25s;
+}
+
+.game-card:hover{
+  transform:translateY(-5px);
+  border-color:var(--cyan);
+}
+
+.game-icon{
+  width:72px;
+  height:72px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 14px;
+  border-radius:20px;
+  background:linear-gradient(
+    135deg,
+    #00e5ff20,
+    #8b5cf620
+  );
+  font-size:38px;
+}
+
+.game-card h3{
+  font-size:17px;
+}
+
+.game-card p{
+  color:var(--muted);
+  font-size:13px;
+  margin:4px 0 15px;
+}
+
+.tag{
+  display:inline-block;
+  color:var(--cyan);
+  background:#00e5ff12;
+  border-radius:5px;
+  padding:2px 7px;
+  font-size:10px;
+  margin-bottom:10px;
+}
+
+.game-card .btn{
+  padding:9px 14px;
+  font-size:13px;
+}
+
+/* ORDER */
+.panel{
+  max-width:700px;
+  margin:auto;
+  padding:25px;
+  background:linear-gradient(
+    145deg,
+    #151d31,
+    #0e1423
+  );
+  border:1px solid #2b3954;
+  border-radius:18px;
+}
+
+.demo-note{
+  padding:12px 14px;
+  background:#fbbf2410;
+  border:1px solid #fbbf2444;
+  color:#fcd98b;
+  border-radius:9px;
+  font-size:13px;
+  margin-bottom:20px;
+}
+
+.field{
+  margin-bottom:17px;
+}
+
+.field label{
+  display:block;
+  font-size:14px;
+  margin-bottom:7px;
+}
+
+.field input,
+.field select{
+  width:100%;
+  padding:12px;
+  border-radius:9px;
+  background:#080d19;
+  color:white;
+  border:1px solid #303d57;
+  outline:none;
+}
+
+.packages{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.package{
+  padding:14px 5px;
+  text-align:center;
+  border-radius:10px;
+  border:1px solid #303d57;
+  background:#0b1220;
+  color:white;
+}
+
+.package.active{
+  border-color:var(--cyan);
+  background:#00e5ff12;
+}
+
+.package strong,
+.package span{
+  display:block;
+}
+
+.package span{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.full-btn{
+  width:100%;
+  margin-top:15px;
+}
+
+/* FEATURES */
+.features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:17px;
+}
+
+.feature{
+  background:var(--card);
+  border:1px solid #25314a;
+  padding:22px;
+  border-radius:14px;
+}
+
+.feature-icon{
+  font-size:30px;
+}
+
+.feature h3{
+  margin:8px 0;
+}
+
+.feature p{
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* FAQ */
+.faq{
+  max-width:750px;
+  margin:auto;
+}
+
+details{
+  padding:17px;
+  background:var(--card);
+  border:1px solid #26334c;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+summary{
+  cursor:pointer;
+  font-weight:bold;
+}
+
+details p{
+  color:var(--muted);
+  padding-top:10px;
+  font-size:14px;
+}
+
+/* FOOTER */
+footer{
+  padding:35px 0;
+  background:#05070d;
+  border-top:1px solid #202a42;
+  text-align:center;
+}
+
+footer .brand{
+  justify-content:center;
+  margin-bottom:8px;
+}
+
+footer .brand img{
+  width:190px;
+}
+
+footer p{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.footer-links{
+  margin:12px 0;
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:22px;
+  z-index:300;
+  transform:translate(-50%,150px);
+  opacity:0;
+  width:min(90%,390px);
+  background:#18243a;
+  border:1px solid var(--cyan);
+  border-radius:12px;
+  padding:15px;
+  box-shadow:0 10px 35px #0008;
+  transition:.3s;
+  text-align:center;
+}
+
+.toast.show{
+  transform:translate(-50%,0);
+  opacity:1;
+}
+
+/* RESPONSIVE */
+@media(max-width:800px){
+
+  .games{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .features{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:560px){
+
+  .nav-inner{
+    min-height:65px;
+  }
+
+  .brand img{
+    width:145px;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+
+  .nav-links{
+    display:none;
+    position:absolute;
+    top:65px;
+    left:0;
+    right:0;
+    padding:20px;
+    background:#0c1120;
+    flex-direction:column;
+    gap:17px;
+    border-bottom:1px solid #26334c;
+  }
+
+  .nav-links.open{
+    display:flex;
+  }
+
+  .hero{
+    padding:65px 12px 55px;
+  }
+
+  .hero-logo{
+    width:min(260px,80vw);
+  }
+
+  .stats{
+    gap:6px;
+  }
+
+  .stat strong{
+    font-size:16px;
+  }
+
+  .stat span{
+    font-size:10px;
+  }
+
+  .packages{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .panel{
+    padding:17px;
+  }
+
+}
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    animation:none !important;
+    transition:none !important;
+    scroll-behavior:auto !important;
+  }
+
 }
 </style>
 </head>
@@ -239,207 +657,546 @@ footer .footer-links { margin: 12px 0; display: flex; justify-content: center; g
 
 <nav>
   <div class="container nav-inner">
-    <a class="brand" href="#">💎 SMART <span>TOP UP</span></a>
-    <button class="menu-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+
+    <a class="brand" href="#">
+      <img
+        src="file_0000000048f08208a7e3a82e54be6853.png"
+        alt="Smart Top Up Logo"
+      >
+    </a>
+
+    <button
+      class="menu-btn"
+      onclick="toggleMenu()"
+      aria-label="Menu"
+    >☰</button>
+
     <div class="nav-links" id="navLinks">
       <a href="#home" onclick="closeMenu()">হোম</a>
       <a href="#games" onclick="closeMenu()">গেমস</a>
       <a href="#demo" onclick="closeMenu()">ডেমো অর্ডার</a>
       <a href="#faq" onclick="closeMenu()">FAQ</a>
     </div>
+
   </div>
 </nav>
 
 <header class="hero" id="home">
+
   <div class="container">
-    <span class="eyebrow">✦ YOUR GAMING UNIVERSE ✦</span>
-    <h1>Level Up Your<br><span class="gradient-text">Gaming World</span></h1>
-    <p>তোমার গেমিং অভিজ্ঞতাকে নতুন রূপ দাও। পছন্দের গেম বেছে নাও এবং আমাদের demo interface ঘুরে দেখো!</p>
+
+    <img
+      class="hero-logo"
+      src="file_0000000048f08208a7e3a82e54be6853.png"
+      alt="Smart Top Up Gaming Logo"
+    >
+
+    <span class="eyebrow">
+      ✦ YOUR GAMING UNIVERSE ✦
+    </span>
+
+    <h1>
+      Level Up Your<br>
+      <span class="gradient-text">Gaming World</span>
+    </h1>
+
+    <p>
+      তোমার গেমিং অভিজ্ঞতাকে নতুন রূপ দাও।
+      পছন্দের গেম বেছে নাও এবং আমাদের demo interface ঘুরে দেখো!
+    </p>
+
     <div class="hero-actions">
       <a class="btn" href="#games">🎮 Explore Games</a>
       <a class="btn-outline" href="#security">🛡️ Safety First</a>
     </div>
+
     <div class="stats">
-      <div class="stat"><strong>🎮 4+</strong><span>গেমের ডেমো কার্ড</span></div>
-      <div class="stat"><strong>📱 100%</strong><span>Responsive Layout</span></div>
-      <div class="stat"><strong>💎 Demo</strong><span>পরীক্ষামূলক সাইট</span></div>
+
+      <div class="stat">
+        <strong>🎮 4+</strong>
+        <span>গেমের ডেমো কার্ড</span>
+      </div>
+
+      <div class="stat">
+        <strong>📱 100%</strong>
+        <span>Responsive Layout</span>
+      </div>
+
+      <div class="stat">
+        <strong>💎 Demo</strong>
+        <span>পরীক্ষামূলক সাইট</span>
+      </div>
+
     </div>
+
   </div>
+
 </header>
 
 <main>
+
 <section class="section" id="games">
+
   <div class="container">
+
     <div class="section-heading">
       <h2>🔥 Explore Games</h2>
       <p>তোমার পছন্দের গেমটি খুঁজে নাও</p>
     </div>
+
     <div class="search-wrap">
-      <input id="gameSearch" type="search" placeholder="🔍 গেমের নাম লিখে খুঁজুন..." aria-label="Search games">
+      <input
+        id="gameSearch"
+        type="search"
+        placeholder="🔍 গেমের নাম লিখে খুঁজুন..."
+        aria-label="Search games"
+      >
     </div>
+
     <div class="games" id="gameList">
+
       <article class="game-card" data-name="free fire">
-        <div class="game-icon">💎</div><span class="tag">POPULAR</span>
-        <h3>Free Fire</h3><p>Diamond Top Up</p>
-        <button class="btn" onclick="chooseGame('Free Fire')">Explore →</button>
+        <div class="game-icon">💎</div>
+        <span class="tag">POPULAR</span>
+        <h3>Free Fire</h3>
+        <p>Diamond Top Up</p>
+        <button
+          class="btn"
+          onclick="chooseGame('Free Fire')"
+        >Explore →</button>
       </article>
+
       <article class="game-card" data-name="pubg mobile">
-        <div class="game-icon">🎯</div><span class="tag">BATTLE ROYALE</span>
-        <h3>PUBG Mobile</h3><p>UC Top Up</p>
-        <button class="btn" onclick="chooseGame('PUBG Mobile')">Explore →</button>
+        <div class="game-icon">🎯</div>
+        <span class="tag">BATTLE ROYALE</span>
+        <h3>PUBG Mobile</h3>
+        <p>UC Top Up</p>
+        <button
+          class="btn"
+          onclick="chooseGame('PUBG Mobile')"
+        >Explore →</button>
       </article>
+
       <article class="game-card" data-name="mobile legends">
-        <div class="game-icon">⚔️</div><span class="tag">MOBA</span>
-        <h3>Mobile Legends</h3><p>Diamond Top Up</p>
-        <button class="btn" onclick="chooseGame('Mobile Legends')">Explore →</button>
+        <div class="game-icon">⚔️</div>
+        <span class="tag">MOBA</span>
+        <h3>Mobile Legends</h3>
+        <p>Diamond Top Up</p>
+        <button
+          class="btn"
+          onclick="chooseGame('Mobile Legends')"
+        >Explore →</button>
       </article>
+
       <article class="game-card" data-name="roblox">
-        <div class="game-icon">🟦</div><span class="tag">ADVENTURE</span>
-        <h3>Roblox</h3><p>Robux Top Up</p>
-        <button class="btn" onclick="chooseGame('Roblox')">Explore →</button>
+        <div class="game-icon">🟦</div>
+        <span class="tag">ADVENTURE</span>
+        <h3>Roblox</h3>
+        <p>Robux Top Up</p>
+        <button
+          class="btn"
+          onclick="chooseGame('Roblox')"
+        >Explore →</button>
       </article>
+
     </div>
+
   </div>
+
 </section>
 
-<section class="section" id="demo" style="background:#0b1020">
+<section
+  class="section"
+  id="demo"
+  style="background:#0b1020"
+>
+
   <div class="container">
+
     <div class="section-heading">
       <h2>🛒 Order Preview</h2>
       <p>ডেমো অর্ডার ফর্ম—এটি কোনো আসল অর্ডার পাঠায় না</p>
     </div>
+
     <div class="panel">
-      <div class="demo-note">⚠️ Demo only: এখানে পেমেন্ট করবেন না। কোনো অর্ডার বা টপ-আপ সম্পন্ন হবে না।</div>
+
+      <div class="demo-note">
+        ⚠️ Demo only: এখানে পেমেন্ট করবেন না।
+        কোনো অর্ডার বা টপ-আপ সম্পন্ন হবে না।
+      </div>
+
       <form id="demoForm">
+
         <div class="field">
           <label for="game">গেম নির্বাচন করুন</label>
+
           <select id="game" required>
-            <option value="">-- গেম নির্বাচন করুন --</option>
+
+            <option value="">
+              -- গেম নির্বাচন করুন --
+            </option>
+
             <option>Free Fire</option>
             <option>PUBG Mobile</option>
             <option>Mobile Legends</option>
             <option>Roblox</option>
+
           </select>
         </div>
+
         <div class="field">
-          <label for="playerId">Player ID / UID (ঐচ্ছিক ডেমো ইনপুট)</label>
-          <input id="playerId" maxlength="40" placeholder="শুধু পরীক্ষার জন্য লিখুন">
+
+          <label for="playerId">
+            Player ID / UID (ঐচ্ছিক ডেমো ইনপুট)
+          </label>
+
+          <input
+            id="playerId"
+            maxlength="40"
+            placeholder="শুধু পরীক্ষার জন্য লিখুন"
+          >
+
         </div>
+
         <div class="field">
+
           <label>ডেমো প্যাকেজ নির্বাচন</label>
+
           <div class="packages">
-            <button type="button" class="package active" data-package="Small Pack">
-              <strong>Small Pack</strong><span>Demo package</span>
+
+            <button
+              type="button"
+              class="package active"
+              data-package="Small Pack"
+            >
+              <strong>Small Pack</strong>
+              <span>Demo package</span>
             </button>
-            <button type="button" class="package" data-package="Medium Pack">
-              <strong>Medium Pack</strong><span>Demo package</span>
+
+            <button
+              type="button"
+              class="package"
+              data-package="Medium Pack"
+            >
+              <strong>Medium Pack</strong>
+              <span>Demo package</span>
             </button>
-            <button type="button" class="package" data-package="Large Pack">
-              <strong>Large Pack</strong><span>Demo package</span>
+
+            <button
+              type="button"
+              class="package"
+              data-package="Large Pack"
+            >
+              <strong>Large Pack</strong>
+              <span>Demo package</span>
             </button>
+
           </div>
+
         </div>
-        <button class="btn full-btn" type="submit">Preview Demo Order →</button>
+
+        <button
+          class="btn full-btn"
+          type="submit"
+        >
+          Preview Demo Order →
+        </button>
+
       </form>
+
     </div>
+
   </div>
+
 </section>
 
 <section class="section" id="security">
+
   <div class="container">
+
     <div class="section-heading">
       <h2>✨ Designed for Gamers</h2>
-      <p>সহজ ব্যবহার ও নিরাপত্তা সচেতনতা আমাদের অগ্রাধিকার</p>
+      <p>
+        সহজ ব্যবহার ও নিরাপত্তা সচেতনতা আমাদের অগ্রাধিকার
+      </p>
     </div>
+
     <div class="features">
-      <article class="feature"><div class="feature-icon">📱</div><h3>Mobile Friendly</h3><p>ছোট স্ক্রিনেও সুন্দরভাবে দেখানোর জন্য তৈরি responsive design।</p></article>
-      <article class="feature"><div class="feature-icon">🔐</div><h3>Privacy First</h3><p>কাউকে কখনো Game Password, OTP, PIN বা Recovery Code দেবে না।</p></article>
-      <article class="feature"><div class="feature-icon">💡</div><h3>Clear Information</h3><p>আসল প্যাকেজ ও মূল্য চালুর আগে যাচাই করা প্রয়োজন।</p></article>
+
+      <article class="feature">
+        <div class="feature-icon">📱</div>
+        <h3>Mobile Friendly</h3>
+        <p>
+          ছোট স্ক্রিনেও সুন্দরভাবে দেখানোর জন্য তৈরি responsive design।
+        </p>
+      </article>
+
+      <article class="feature">
+        <div class="feature-icon">🔐</div>
+        <h3>Privacy First</h3>
+        <p>
+          কাউকে কখনো Game Password, OTP, PIN বা Recovery Code দেবে না।
+        </p>
+      </article>
+
+      <article class="feature">
+        <div class="feature-icon">💡</div>
+        <h3>Clear Information</h3>
+        <p>
+          আসল প্যাকেজ ও মূল্য চালুর আগে যাচাই করা প্রয়োজন।
+        </p>
+      </article>
+
     </div>
+
   </div>
+
 </section>
 
-<section class="section" id="faq" style="background:#0b1020">
+<section
+  class="section"
+  id="faq"
+  style="background:#0b1020"
+>
+
   <div class="container">
+
     <div class="section-heading">
       <h2>❓ Frequently Asked Questions</h2>
       <p>কিছু সাধারণ প্রশ্নের উত্তর</p>
     </div>
+
     <div class="faq">
-      <details><summary>এখান থেকে কি এখনই Diamond কেনা যাবে?</summary><p>না। এটি বর্তমানে একটি demo website। কোনো বাস্তব পেমেন্ট বা top-up ব্যবস্থা যুক্ত নেই।</p></details>
-      <details><summary>Player ID কেন লাগে?</summary><p>অনেক গেমের বৈধ top-up প্রক্রিয়ায় সঠিক Player ID প্রয়োজন হতে পারে। আসল অর্ডার চালু হলে সংশ্লিষ্ট সরবরাহকারীর নিয়ম অনুসরণ করতে হবে।</p></details>
-      <details><summary>পেমেন্ট কোথায় করব?</summary><p>এই demo website-এ কোনো payment option নেই। যাচাইকৃত সরবরাহকারী ও অনুমোদিত পেমেন্ট ব্যবস্থা ঠিক করার পরই তা যুক্ত করা উচিত।</p></details>
-      <details><summary>আমার Password বা OTP দিতে হবে?</summary><p>না। নিজের Password, OTP, PIN বা Recovery Code কারও সঙ্গে শেয়ার করবে না।</p></details>
+
+      <details>
+        <summary>
+          এখান থেকে কি এখনই Diamond কেনা যাবে?
+        </summary>
+
+        <p>
+          না। এটি বর্তমানে একটি demo website।
+          কোনো বাস্তব পেমেন্ট বা top-up ব্যবস্থা যুক্ত নেই।
+        </p>
+      </details>
+
+      <details>
+        <summary>
+          Player ID কেন লাগে?
+        </summary>
+
+        <p>
+          অনেক গেমের বৈধ top-up প্রক্রিয়ায় সঠিক Player ID প্রয়োজন হতে পারে।
+          আসল অর্ডার চালু হলে সংশ্লিষ্ট সরবরাহকারীর নিয়ম অনুসরণ করতে হবে।
+        </p>
+      </details>
+
+      <details>
+        <summary>
+          পেমেন্ট কোথায় করব?
+        </summary>
+
+        <p>
+          এই demo website-এ কোনো payment option নেই।
+          যাচাইকৃত সরবরাহকারী ও অনুমোদিত পেমেন্ট ব্যবস্থা ঠিক করার পরই তা যুক্ত করা উচিত।
+        </p>
+      </details>
+
+      <details>
+        <summary>
+          আমার Password বা OTP দিতে হবে?
+        </summary>
+
+        <p>
+          না। নিজের Password, OTP, PIN বা Recovery Code কারও সঙ্গে শেয়ার করবে না।
+        </p>
+      </details>
+
     </div>
+
   </div>
+
 </section>
+
 </main>
 
 <footer>
+
   <div class="container">
-    <div class="brand">💎 SMART TOP UP</div>
-    <p>Power Up Your Gaming World</p>
-    <div class="footer-links">
-      <a href="#home">হোম</a><a href="#games">গেমস</a><a href="#security">নিরাপত্তা</a><a href="#faq">FAQ</a>
+
+    <div class="brand">
+      <img
+        src="file_0000000048f08208a7e3a82e54be6853.png"
+        alt="Smart Top Up Logo"
+      >
     </div>
-    <p>© 2026 Smart Top Up • Demo website</p>
-    <p>এই সাইটটি বর্তমানে পরীক্ষামূলক; বাস্তব top-up বা payment চালু নেই।</p>
+
+    <p>Power Up Your Gaming World</p>
+
+    <div class="footer-links">
+      <a href="#home">হোম</a>
+      <a href="#games">গেমস</a>
+      <a href="#security">নিরাপত্তা</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <p>
+      © 2026 Smart Top Up • Demo website
+    </p>
+
+    <p>
+      এই সাইটটি বর্তমানে পরীক্ষামূলক;
+      বাস্তব top-up বা payment চালু নেই।
+    </p>
+
   </div>
+
 </footer>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div
+  class="toast"
+  id="toast"
+  role="status"
+  aria-live="polite"
+></div>
 
 <script>
-let selectedPackage = "Small Pack";
+
+let selectedPackage="Small Pack";
 let toastTimer;
 
-function showToast(message) {
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
+function showToast(message){
+
+  const toast=document.getElementById("toast");
+
+  toast.textContent=message;
+
   toast.classList.add("show");
+
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("show"), 3500);
+
+  toastTimer=setTimeout(
+    ()=>toast.classList.remove("show"),
+    3500
+  );
+
 }
 
-function chooseGame(game) {
-  document.getElementById("game").value = game;
-  document.getElementById("demo").scrollIntoView({ behavior: "smooth" });
-  showToast(game + " নির্বাচন করা হয়েছে। এটি শুধু ডেমো।");
+function chooseGame(game){
+
+  document.getElementById("game").value=game;
+
+  document
+    .getElementById("demo")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+  showToast(
+    game+" নির্বাচন করা হয়েছে। এটি শুধু ডেমো।"
+  );
+
 }
 
-function toggleMenu() {
-  document.getElementById("navLinks").classList.toggle("open");
+function toggleMenu(){
+
+  document
+    .getElementById("navLinks")
+    .classList
+    .toggle("open");
+
 }
 
-function closeMenu() {
-  document.getElementById("navLinks").classList.remove("open");
+function closeMenu(){
+
+  document
+    .getElementById("navLinks")
+    .classList
+    .remove("open");
+
 }
 
-document.querySelectorAll(".package").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".package").forEach(item => item.classList.remove("active"));
-    button.classList.add("active");
-    selectedPackage = button.dataset.package;
+document
+  .querySelectorAll(".package")
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        document
+          .querySelectorAll(".package")
+          .forEach(item=>
+            item.classList.remove("active")
+          );
+
+        button.classList.add("active");
+
+        selectedPackage=
+          button.dataset.package;
+
+      }
+    );
+
   });
-});
 
-document.getElementById("gameSearch").addEventListener("input", function() {
-  const query = this.value.toLowerCase().trim();
-  document.querySelectorAll(".game-card").forEach(card => {
-    card.style.display = card.dataset.name.includes(query) ? "" : "none";
-  });
-});
+document
+  .getElementById("gameSearch")
+  .addEventListener(
+    "input",
+    function(){
 
-document.getElementById("demoForm").addEventListener("submit", function(event) {
-  event.preventDefault();
-  const game = document.getElementById("game").value;
-  if (!game) {
-    showToast("আগে একটি গেম নির্বাচন করুন।");
-    return;
-  }
-  showToast("Demo preview: " + game + " • " + selectedPackage + ". কোনো অর্ডার পাঠানো হয়নি।");
-});
+      const query=
+        this.value
+          .toLowerCase()
+          .trim();
+
+      document
+        .querySelectorAll(".game-card")
+        .forEach(card=>{
+
+          card.style.display=
+            card.dataset.name.includes(query)
+              ? ""
+              : "none";
+
+        });
+
+    }
+  );
+
+document
+  .getElementById("demoForm")
+  .addEventListener(
+    "submit",
+    function(event){
+
+      event.preventDefault();
+
+      const game=
+        document.getElementById("game").value;
+
+      if(!game){
+
+        showToast(
+          "আগে একটি গেম নির্বাচন করুন।"
+        );
+
+        return;
+
+      }
+
+      showToast(
+        "Demo preview: "
+        +game
+        +" • "
+        +selectedPackage
+        +". কোনো অর্ডার পাঠানো হয়নি।"
+      );
+
+    }
+  );
+
 </script>
 
 </body>
-</html>
+</html>p
